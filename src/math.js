@@ -1,11 +1,14 @@
 /// <reference path="lib/require.js" />
-define(function () {
-    var MyMath = { someStuff: "otherStuff", someMoreStuff: "thisOtherStuff", andThenSomeMore: "asdf" };
+define(["Matrix/Matrix", "Matrix/Vector", "Numbers/JSNumber"], function (Matrix, Vector, JSNumber) {
 
-
-    var x = 7;
-    var y = 12;
-
-    return MyMath;
+    return {
+        Matrix: {
+            Matrix: Matrix,
+            Vector: Vector
+        },
+        Numbers: {
+            JSNumber: JSNumber
+        }
+    };
 
 });
