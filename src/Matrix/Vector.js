@@ -9,7 +9,7 @@
                     length = arguments[0].length;
                     vec = new Array(length);
                     for (var i = 0; i < length; i++) {
-                        vec[i] = new JSNumber(arguments[0][i]);
+                        vec[i] = (arguments[0][i].toNumber) ? arguments[0][i] : new JSNumber(arguments[0][i]);
                     }
                 } else if (typeof (arguments[0]) === 'number') {
                     length = arguments[0];
@@ -127,6 +127,15 @@
                     }
 
                     return total;
+                },
+                equals: function(vec) {
+                    if (this.getLength() !== vec.getLength()) return false;
+
+                    for (var i = 0; i < this.getLength() ; i++) {
+                        if (!this.getValue(i).equals(vec.getValue(i))) return false;
+                    }
+
+                    return true;
                 },
                 toString: function () {
                     var myString = "[";

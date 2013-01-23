@@ -6,8 +6,4 @@ var config = {
     out: "./build/Math-built.js"
 };
 
-requirejs.optimize(config, function (buildResponse) {
-    console.log("hi");
-    console.log(buildResponse);
-    // buildResponse is text output of modulesl inlcuded
-});
+requirejs.optimize(config);

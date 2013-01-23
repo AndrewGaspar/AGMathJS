@@ -9,6 +9,10 @@
         }
     }
 
+    function isJSNumber(val) {
+        return val instanceof JSNumber || typeof val === "number" || val === JSNumber.Zero;
+    }
+
     var JSNumber = (function () {
         var JSNumber = function (value) {
 
@@ -49,27 +53,71 @@
             },
 
             inverse: function () {
-                return new JSNumber(1 / value);
+                return new JSNumber(1 / this.toNumber());
             },
 
             add: function (val) {
-                val = toNumber(val);
-                return new JSNumber(this.toNumber() + val);
+                var number;
+
+                if (val.toNumber) {
+                    if (isJSNumber(val)) {
+                        number = val.toNumber();
+                    } else {
+                        return val.add(this);
+                    }
+                } else {
+                    number = toNumber(val);
+                }
+
+                return new JSNumber(this.toNumber() + number);
             },
 
             subtract: function (val) {
-                val = toNumber(val);
-                return new JSNumber(this.toNumber() - val);
+                var number;
+
+                if (val.toNumber) {
+                    if (isJSNumber(val)) {
+                        number = val.toNumber();
+                    } else {
+                        return val.subtract(this).negative();
+                    }
+                } else {
+                    number = toNumber(val);
+                }
+
+                return new JSNumber(this.toNumber() - number);
             },
 
             multiply: function (val) {
-                val = toNumber(val);
-                return new JSNumber(this.toNumber() * val);
+                var number;
+
+                if (val.toNumber) {
+                    if (isJSNumber(val)) {
+                        number = val.toNumber();
+                    } else {
+                        return val.multiply(this);
+                    }
+                } else {
+                    number = toNumber(val);
+                }
+
+                return new JSNumber(this.toNumber() * number);
             },
 
             divide: function (val) {
-                val = toNumber(val);
-                return new JSNumber(this.toNumber() / val);
+                var number;
+
+                if (val.toNumber) {
+                    if (isJSNumber(val)) {
+                        number = val.toNumber();
+                    } else {
+                        return val.divide(this).inverse();
+                    }
+                } else {
+                    number = toNumber(val);
+                }
+
+                return new JSNumber(this.toNumber() / number);
             },
 
             toString: function () {
@@ -100,12 +148,16 @@
             return new JSNumber(1 / 0);
         },
         add: function (val) {
-            val = toNumber(val);
-            return val;
+            if (val.toNumber)
+                return val;
+            else
+                return new JSNumber(val);
         },
         subtract: function (val) {
-            val = toNumber(val);
-            return val.negative();
+            if (val.toNumber)
+                return val.negative();
+            else
+                return new JSNumber(val);
         },
         multiply: function () {
             return JSNumber.Zero;
@@ -117,6 +169,29 @@
             return (0).toString();
         }
     };
+
+    var methods = ["isZero", "equals", "negative", "abs", "inverse", "add", "subtract", "multiply", "divide"];
+
+    for (var i in methods) {
+        Number.prototype[methods[i]] = (function (method) {
+            return function () {
+                return JSNumber.prototype[method].apply(new JSNumber(this.valueOf()), arguments);
+            }
+        })(methods[i]);
+    }
+
+    //Number.prototype.toNumber = function () { return this; }
+    //Number.prototype.isZero = function () { return (new JSNumber(this.valueOf())).isZero(); }
+
+    //for (var method in JSNumber.prototype) {
+    //    if (JSNumber.prototype[method] != JSNumber.prototype.toString) {
+    //        Number.prototype[method] = function () {
+    //            //return JSNumber.prototype[method].apply(new JSNumber(this), arguments);
+    //            var jsn = new JSNumber(this.valueOf());
+    //            return jsn[method](arguments);
+    //        };
+    //    }
+    //}
 
     return JSNumber;
 });

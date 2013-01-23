@@ -8,11 +8,79 @@ requirejs.config({
     nodeRequire: require
 });
 
-requirejs(["Numbers/JSNumber", "Matrix/Matrix"], function (JSNumber, Matrix) {
+requirejs(["Numbers/JSNumber", "Numbers/ComplexNumber", "Matrix/Matrix", "Matrix/Vector"], function (JSNumber, ComplexNumber, Matrix, Vector) {
     buster.testCase("JSNumber Tests", {
         "simple addition": function () {
             var seven = new JSNumber(7);
             assert(seven.add(8).toNumber() === 15);
+        },
+        "number test": function () {
+            console.log((8).divide(2));
+            assert((8).divide(2).equals(new JSNumber(8).divide(new JSNumber(2))));
+        }
+    });
+
+    buster.testCase("ComplexNumber Tests", {
+        "addition to regular number": function () {
+            var first = new ComplexNumber(2, 5);
+            var second = 8;
+
+            var third = first.add(second);
+
+            assert(third.getReal().equals(10) && third.getImaginary().equals(5));
+        },
+        "complex addition": function () {
+            var first = new ComplexNumber(-8, 13);
+            var second = new ComplexNumber(5, -21);
+
+            var third = first.add(second);
+            
+            assert(third.getReal().equals(-3) && third.getImaginary().equals(-8));
+        },
+        "subtraction": function () {
+            var first = new ComplexNumber(7, 2);
+            var second = new ComplexNumber(5, 3);
+
+            var third = first.subtract(second);
+
+            assert(third.getReal().equals(2) && third.getImaginary().equals(-1));
+        },
+        "constant multiplication": function() {
+            var first = new ComplexNumber(2.4, -8);
+            var second = 5;
+
+            var third = first.multiply(second);
+
+            assert(third.getReal().equals(12) && third.getImaginary().equals(-40));
+        },
+        "complex multiplication": function () {
+            var first = new ComplexNumber(7, 3);
+            var second = new ComplexNumber(-6, 2);
+
+            var third = first.multiply(second);
+
+            assert(third.getReal().equals(-48) && third.getImaginary().equals(-4));
+        },
+        "constant division": function () {
+            var first = new ComplexNumber(10, 2);
+            var second = 4;
+
+            var third = first.divide(second);
+
+            assert(third.getReal().equals(5/2) && third.getImaginary().equals(1/2));
+        },
+        "complex division": function () {
+            var first = new ComplexNumber(12, 7);
+            var second = new ComplexNumber(6, 3.6);
+
+            var third = first.divide(second);
+
+            assert(third.getReal().equals(97.2/48.96) && third.getImaginary().equals(-1.2/48.96));
+        },
+        "abs": function () {
+            var number = new ComplexNumber(6, 8);
+
+            assert(number.abs().equals(10));
         }
     });
 
@@ -146,6 +214,31 @@ requirejs(["Numbers/JSNumber", "Matrix/Matrix"], function (JSNumber, Matrix) {
             var result = inverse.multiply(message);
 
             assert(result.equals(decoded));
+        },
+        "complex row reduction": function () {
+            var a = new Matrix(3, 4);
+
+            a.setMatrix(
+                [
+                    [1, 2, 2, -3],
+                    [2, 1, 1, 0],
+                    [1, -1, new ComplexNumber(0, -1), new ComplexNumber(0, 1)]
+                ]
+            );
+
+            var answer = new Vector(
+                [
+                    1,
+                    new ComplexNumber(0, 1),
+                    new ComplexNumber(-2, -1)
+                ]
+            );
+
+            var b = a.rowReduce();
+
+            var result = b.getColumn(3);
+
+            assert(result.equals(answer));
         }
     });
 });
