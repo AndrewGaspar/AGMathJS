@@ -4,8 +4,8 @@ define(["Numbers/JSNumber"], function (JSNumber) {
     var ComplexNumber = (function () {
         var ComplexNumber = function (r, i) {
 
-            var real = (r.toNumber) ? r : new JSNumber(r),
-                imaginary = (i.toNumber) ? i : new JSNumber(i);
+            var real = (r.isAGNumber) ? r : new JSNumber(r),
+                imaginary = (i.isAGNumber) ? i : new JSNumber(i);
 
             this.getReal = function () {
                 return real;
@@ -16,11 +16,15 @@ define(["Numbers/JSNumber"], function (JSNumber) {
             }
 
             this.toNumber = function () {
-                return this.abs();
+                var squared = this.getReal().multiply(this.getReal()).add(this.getImaginary().multiply(this.getImaginary())).toNumber();
+
+                return Math.sqrt(squared);
             }
         };
 
         ComplexNumber.prototype = {
+            isAGNumber: true,
+
             isZero: function (epsilon) {
                 if (!epsilon) {
                     epsilon = 0.000001;
@@ -35,7 +39,7 @@ define(["Numbers/JSNumber"], function (JSNumber) {
                 }
 
                 if (value instanceof ComplexNumber) {
-                    return this.subtract(value).abs().toNumber() < epsilon;
+                    return this.subtract(value).isZero();
                 } else {
                     if (this.getImaginary().isZero()) {
                         return this.getReal().subtract(value).abs().toNumber() < epsilon;
@@ -130,6 +134,8 @@ define(["Numbers/JSNumber"], function (JSNumber) {
                 if (!this.getImaginary().isZero()) {
                     if (!this.getReal().isZero()) {
                         string += (this.getImaginary().toNumber() < 0) ? " - " : " + ";
+                    } else {
+                        string += (this.getImaginary().toNumber() < 0) ? " - " : "";
                     }
 
                     string += "i";

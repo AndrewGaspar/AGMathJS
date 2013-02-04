@@ -24,6 +24,7 @@
         };
 
         JSNumber.prototype = {
+            isAGNumber: true,
             isZero: function (epsilon) {
                 if (!epsilon) {
                     epsilon = 0.000001;
@@ -129,6 +130,7 @@
     })();
 
     JSNumber.Zero = {
+        isAGNumber: true,
         toNumber: function () { return 0; },
         isZero: function() {
             return true;
@@ -179,19 +181,6 @@
             }
         })(methods[i]);
     }
-
-    //Number.prototype.toNumber = function () { return this; }
-    //Number.prototype.isZero = function () { return (new JSNumber(this.valueOf())).isZero(); }
-
-    //for (var method in JSNumber.prototype) {
-    //    if (JSNumber.prototype[method] != JSNumber.prototype.toString) {
-    //        Number.prototype[method] = function () {
-    //            //return JSNumber.prototype[method].apply(new JSNumber(this), arguments);
-    //            var jsn = new JSNumber(this.valueOf());
-    //            return jsn[method](arguments);
-    //        };
-    //    }
-    //}
 
     return JSNumber;
 });

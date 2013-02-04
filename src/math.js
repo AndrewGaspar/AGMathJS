@@ -1,5 +1,5 @@
 /// <reference path="lib/require.js" />
-define(["Matrix/Matrix", "Matrix/Vector", "Numbers/JSNumber", "Numbers/ComplexNumber"], function (Matrix, Vector, JSNumber, ComplexNumber) {
+define(["Matrix/Matrix", "Matrix/Vector", "Numbers/JSNumber", "Numbers/ComplexNumber", "Numbers/FractionalNumber"], function (Matrix, Vector, JSNumber, ComplexNumber, FractionalNumber) {
 
     return {
         Matrix: {
@@ -8,7 +8,8 @@ define(["Matrix/Matrix", "Matrix/Vector", "Numbers/JSNumber", "Numbers/ComplexNu
         },
         Numbers: {
             JSNumber: JSNumber,
-            ComplexNumber: ComplexNumber
+            ComplexNumber: ComplexNumber,
+            FractionalNumber: FractionalNumber
         }
     };
 
