@@ -15,7 +15,6 @@ requirejs(["Numbers/JSNumber", "Numbers/ComplexNumber", "Matrix/Matrix", "Matrix
             assert(seven.add(8).toNumber() === 15);
         },
         "number test": function () {
-            console.log((8).divide(2));
             assert((8).divide(2).equals(new JSNumber(8).divide(new JSNumber(2))));
         }
     });
