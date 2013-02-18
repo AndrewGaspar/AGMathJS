@@ -1,14 +1,21 @@
-﻿/// <reference path="node_modules/requirejs/require.js" />
+/// <reference path="node_modules/requirejs/require.js" />
 
 var buster = require("buster");
 
 var requirejs = require("requirejs");
+
 requirejs.config({
     baseUrl: "./src",
     nodeRequire: require
 });
 
-requirejs(["Numbers/JSNumber", "Numbers/ComplexNumber", "Matrix/Matrix", "Matrix/Vector"], function (JSNumber, ComplexNumber, Matrix, Vector) {
+requirejs(["Math"], function (AGMath) {
+    var JSNumber = AGMath.Numbers.JSNumber, 
+        ComplexNumber = AGMath.Numbers.ComplexNumber, 
+        FractionalNumber = AGMath.Numbers.FractionalNumber,
+        Matrix = AGMath.Matrix.Matrix, 
+        Vector = AGMath.Matrix.Vector;
+    
     buster.testCase("JSNumber Tests", {
         "simple addition": function () {
             var seven = new JSNumber(7);
@@ -17,6 +24,36 @@ requirejs(["Numbers/JSNumber", "Numbers/ComplexNumber", "Matrix/Matrix", "Matrix
         "number test": function () {
             assert((8).divide(2).equals(new JSNumber(8).divide(new JSNumber(2))));
         }
+    });
+    
+    buster.testCase("FractionalNumber Tests", {
+       "simple Fraction": function() {
+           var f = new FractionalNumber(3,6);
+           f.reduce();
+           
+           assert(f.getNumerator() === 1 && f.getDenominator() === 2);
+       },
+       "simple addition": function() {
+            var f = new FractionalNumber(7,13),
+                g = new FractionalNumber(3,4),
+                h = f.add(g);
+                
+            assert(h.getNumerator() === 67 && h.getDenominator() === 52);
+       },
+       "division by integer": function() {
+           var f = new FractionalNumber(3,2);
+           
+           f = f.divide(6);
+           
+           assert(f.equals(0.25));
+       },
+       "division by JSNumber": function() {
+           var f = new FractionalNumber(3,2);
+           
+           f = f.divide(new JSNumber(6));
+           
+           assert(f.equals(0.25));
+       }
     });
 
     buster.testCase("ComplexNumber Tests", {

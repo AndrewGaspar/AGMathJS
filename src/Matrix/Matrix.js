@@ -1,4 +1,4 @@
-﻿define(["Numbers/JSNumber", "Matrix/Vector"], 
+define(["Numbers/JSNumber", "Matrix/Vector"], 
     function (JSNumber, Vector) {
         var Matrix = (function () {
             var Matrix = function (m, n) {
@@ -169,6 +169,20 @@
                     }
 
                     return total;
+                },
+
+                transpose: function() {
+                    var self = this;
+                    
+                    var t = new Matrix(self.getNumColumns(), self.getNumRows());
+                    
+                    for(var i = 0; i < self.getNumRows(); i++) {
+                        for(var j = 0; j < self.getNumColumns(); j++) {
+                            t.setValue(j,i, self.getValue(i,j));
+                        }
+                    }
+                    
+                    return t;
                 },
 
                 add: function(matrix2) {

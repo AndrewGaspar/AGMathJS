@@ -1,4 +1,4 @@
-﻿define(function () {
+define(["Numbers/JSNumber"],function (JSNumber) {
     function toNumber(val) {
         if (val.toNumber) {
             return val.toNumber();
@@ -73,6 +73,8 @@
                     }
                     isReduced = true;
                 }
+                
+                return this;
             }
 
             this.isNegative = function () {
