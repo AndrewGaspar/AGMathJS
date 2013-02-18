@@ -9,7 +9,7 @@ requirejs.config({
     nodeRequire: require
 });
 
-requirejs(["Math"], function (AGMath) {
+requirejs(["AGMath"], function (AGMath) {
     var JSNumber = AGMath.Numbers.JSNumber, 
         ComplexNumber = AGMath.Numbers.ComplexNumber, 
         FractionalNumber = AGMath.Numbers.FractionalNumber,
