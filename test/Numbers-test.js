@@ -271,9 +271,29 @@ requirejs(["AGMath"], function (AGMath) {
             );
 
             var b = a.rowReduce();
+            
+            console.log(b.toString());
 
             var result = b.getColumn(3);
 
+            assert(result.equals(answer));
+        },
+        "matrix using fractions": function() {
+            var a = new Matrix(3,4, { useFractions: true });
+            a.setMatrix(
+                [
+                    [2,1,-1,8],
+                    [-3,-1,2,-11],
+                    [-2,1,2,-3]
+                ]
+            );
+            
+            var answer = new Vector([2,3,-1]);
+            
+            var b = a.rowReduce();
+            
+            var result = b.getColumn(3);
+            
             assert(result.equals(answer));
         }
     });

@@ -1,8 +1,14 @@
-define(["Numbers/JSNumber", "Matrix/Vector"], 
-    function (JSNumber, Vector) {
+define(["Numbers/JSNumber", "Numbers/FractionalNumber", "Matrix/Vector"], 
+    function (JSNumber, FractionalNumber, Vector) {
         var Matrix = (function () {
-            var Matrix = function (m, n) {
+            var Matrix = function (m, n, config) {
+                var self = this;
+                
                 var mat = new Array(m * n);
+                
+                if(config) {
+                    this.useFractions = !!config.useFractions;
+                }
 
                 this.getNumRows = function () {
                     return m;
@@ -19,7 +25,7 @@ define(["Numbers/JSNumber", "Matrix/Vector"],
                 this.setValue = function (row, column, value) {
                     if (!value.toNumber) {
                         if (typeof (value) === "number") {
-                            value = new JSNumber(value);
+                            value = (self.useFractions) ? new FractionalNumber(value, 1) : new JSNumber(value);
                         } else {
                             throw "not a number type!";
                         }
@@ -365,7 +371,7 @@ define(["Numbers/JSNumber", "Matrix/Vector"],
                 toString: function () {
                     var myString = "[";
                     for (var i = 0; i < this.getNumRows() ; i++) {
-                        myString += this.getRow(i);
+                        myString += this.getRow(i).toString();
 
                         if (i != this.getNumRows() - 1) {
                             myString += ",";

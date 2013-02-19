@@ -1,4 +1,4 @@
-﻿/// <reference path="../lib/require.js" />
+/// <reference path="../lib/require.js" />
 
 define(["Numbers/JSNumber"], function (JSNumber) {
     var ComplexNumber = (function () {
@@ -133,9 +133,9 @@ define(["Numbers/JSNumber"], function (JSNumber) {
 
                 if (!this.getImaginary().isZero()) {
                     if (!this.getReal().isZero()) {
-                        string += (this.getImaginary().toNumber() < 0) ? " - " : " + ";
+                        string += (this.getImaginary().toNumber() < 0) ? "-" : "+";
                     } else {
-                        string += (this.getImaginary().toNumber() < 0) ? " - " : "";
+                        string += (this.getImaginary().toNumber() < 0) ? "-" : "";
                     }
 
                     string += "i";

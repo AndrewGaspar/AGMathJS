@@ -119,7 +119,7 @@ define(["Numbers/JSNumber"],function (JSNumber) {
             },
 
             negative: function () {
-                return new FractionalNumber(-this.getNegative() * this.getNumerator(), this.getDenominator());
+                return new FractionalNumber(-this.negativeFactor() * this.getNumerator(), this.getDenominator());
             },
 
             abs: function () {
@@ -297,7 +297,7 @@ define(["Numbers/JSNumber"],function (JSNumber) {
 
             toString: function () {
                 this.reduce();
-                return this.negativeFactor() * this.getNumerator() + "/" + this.getDenominator();
+                return (this.negativeFactor() * this.getNumerator()).toString() + ((this.getDenominator() === 1) ? '' : "/" + this.getDenominator());
             }
         };
 
