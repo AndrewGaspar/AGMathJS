@@ -293,6 +293,27 @@ requirejs(["AGMath"], function (AGMath) {
             var result = b.getColumn(3);
             
             assert(result.equals(answer));
+        },
+        "a test with Fractions": function() {
+            var a = new Matrix(6,7, {useFractions: true});
+            a.setMatrix(
+                [
+                    [-3, 1, 0, 0, 0, 0, -60],
+                    [1, -5, 3, 0, 0, 0, -12],
+                    [0, 1, -3, 0, 0, 0, 0],
+                    [0, 0, 1, -1, 0, 0, 0],
+                    [1, 0, 0, 0, -1, 0, 0],
+                    [0, 1, 0, 0, 0, -1, 0]
+                ]
+            );
+            
+            var ans = new Vector([22.91,8.73,2.91,2.91,22.91,8.73]);
+            
+            var b = a.rowReduce();
+            
+            var out = b.getColumn(6);
+            
+            assert(out.equals(ans, [0.01,0.01,0.01,0.01, 0.01, 0.01]));
         }
     });
 });

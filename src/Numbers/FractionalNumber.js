@@ -12,6 +12,10 @@ define(["Numbers/JSNumber"],function (JSNumber) {
     function isJSNumber(val) {
         return val instanceof JSNumber || typeof val === "number" || val === JSNumber.Zero;
     }
+    
+    function isNatural(val) {
+        return (val % 1) === 0;
+    }
 
     function gcd(a, b) {
         if (b === 0) return a;
@@ -163,14 +167,20 @@ define(["Numbers/JSNumber"],function (JSNumber) {
                     } else {
                         number = toNumber(val);
                     }
+                    
+                    if(isNatural(number)) {
 
-                    var numerator = this.negativeFactor() * this.getNumerator() + number * this.getDenominator();
-                    if (willLosePrecision(numerator)) {
-                        this.reduce();
-                        numerator = this.negativeFactor() * this.getNumerator() + number * this.getDenominator();
+    
+                        var numerator = this.negativeFactor() * this.getNumerator() + number * this.getDenominator();
+                        if (willLosePrecision(numerator)) {
+                            this.reduce();
+                            numerator = this.negativeFactor() * this.getNumerator() + number * this.getDenominator();
+                        }
+    
+                        return new FractionalNumber(numerator, this.getDenominator());
+                    } else {
+                        return new JSNumber(this.toNumber() + number);
                     }
-
-                    return new FractionalNumber(numerator, this.getDenominator());
                 }
             },
 
@@ -203,14 +213,19 @@ define(["Numbers/JSNumber"],function (JSNumber) {
                     } else {
                         number = toNumber(val);
                     }
+                    
+                    if(isNatural(number)) {
 
-                    var numerator = this.negativeFactor() * this.getNumerator() - number * this.getDenominator();
-                    if (willLosePrecision(numerator)) {
-                        this.reduce();
-                        numerator = this.negativeFactor() * this.getNumerator() - number * this.getDenominator();
+                        var numerator = this.negativeFactor() * this.getNumerator() - number * this.getDenominator();
+                        if (willLosePrecision(numerator)) {
+                            this.reduce();
+                            numerator = this.negativeFactor() * this.getNumerator() - number * this.getDenominator();
+                        }
+    
+                        return new FractionalNumber(numerator, this.getDenominator());
+                    } else {
+                        return new JSNumber(this.toNumber() - number);
                     }
-
-                    return new FractionalNumber(numerator, this.getDenominator());
                 }
             },
 
@@ -241,16 +256,18 @@ define(["Numbers/JSNumber"],function (JSNumber) {
                     } else {
                         number = toNumber(val);
                     }
-
-                    if (Math.abs(number) < 1) number = 1 / number;
-
-                    var numerator = this.negativeFactor() * this.getNumerator() * number;
-                    if (willLosePrecision(numerator)) {
-                        this.reduce();
-                        numerator = this.negativeFactor() * this.getNumerator() * number;
+                    
+                    if(isNatural(number)) {
+                        var numerator = this.negativeFactor() * this.getNumerator() * number;
+                        if (willLosePrecision(numerator)) {
+                            this.reduce();
+                            numerator = this.negativeFactor() * this.getNumerator() * number;
+                        }
+    
+                        return new FractionalNumber(numerator, this.getDenominator());
+                    } else {
+                        return new JSNumber(this.toNumber() * number);
                     }
-
-                    return new FractionalNumber(numerator, this.getDenominator());
                 }
             },
 
@@ -283,15 +300,19 @@ define(["Numbers/JSNumber"],function (JSNumber) {
                         number = toNumber(val);
                     }
 
-                    if (Math.abs(number) < 1) number = 1 / number;
+                    if(isNatural(number)) {
 
-                    var denominator = this.getDenominator() * number;
-                    if (willLosePrecision(denominator)) {
-                        this.reduce();
-                        denominator = this.getDenominator() * number;
+    
+                        var denominator = this.getDenominator() * number;
+                        if (willLosePrecision(denominator)) {
+                            this.reduce();
+                            denominator = this.getDenominator() * number;
+                        }
+    
+                        return new FractionalNumber(this.negativeFactor() * this.getNumerator(), denominator);
+                    } else {
+                        return new JSNumber(this.toNumber() / number);
                     }
-
-                    return new FractionalNumber(this.negativeFactor() * this.getNumerator(), denominator);
                 }
             },
 

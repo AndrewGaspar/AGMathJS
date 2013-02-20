@@ -1,4 +1,4 @@
-﻿define(["Numbers/JSNumber"],
+define(["Numbers/JSNumber"],
     function (JSNumber) {
         var Vector = (function () {
             var Vector = function () {
@@ -128,11 +128,12 @@
 
                     return total;
                 },
-                equals: function(vec) {
+                equals: function(vec, epsilons) {
                     if (this.getLength() !== vec.getLength()) return false;
 
-                    for (var i = 0; i < this.getLength() ; i++) {
-                        if (!this.getValue(i).equals(vec.getValue(i))) return false;
+                    for (var i = 0; i < this.getLength(); i++) {
+                        var eps = (epsilons instanceof Array) ? epsilons[i] : epsilons;
+                        if (!this.getValue(i).equals(vec.getValue(i), eps)) return false;
                     }
 
                     return true;
