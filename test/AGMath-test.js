@@ -121,9 +121,6 @@ requirejs(["AGMath"], function (AGMath) {
     });
 
     buster.testCase("Matrix tests", {
-        "true": function() {
-            assert(true);
-        },
         "determinant": function () {
             var matr = new Matrix(3, 3);
 
@@ -314,6 +311,25 @@ requirejs(["AGMath"], function (AGMath) {
             var out = b.getColumn(6);
             
             assert(out.equals(ans, [0.01,0.01,0.01,0.01, 0.01, 0.01]));
+        },
+        "transpose test": function() {
+            var aMatrix = new Matrix(3,4),
+                tMatrix = new Matrix(4,3);
+            
+            aMatrix.setMatrix([
+                [1,2,3,4],
+                [5,6,7,8],
+                [9,10,11,12]
+            ]);
+            
+            tMatrix.setMatrix([
+                [1,5,9],
+                [2,6,10],
+                [3,7,11],
+                [4,8,12]
+            ]);
+            
+            assert(aMatrix.transpose().equals(tMatrix));
         }
     });
 });
