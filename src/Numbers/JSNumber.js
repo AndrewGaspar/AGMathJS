@@ -1,4 +1,4 @@
-﻿define(function () {
+define(function () {
     function toNumber(val) {
         if (val.toNumber) {
             return val.toNumber();
@@ -60,7 +60,7 @@
             add: function (val) {
                 var number;
 
-                if (val.toNumber) {
+                if (val.isAGNumber) {
                     if (isJSNumber(val)) {
                         number = val.toNumber();
                     } else {
@@ -76,7 +76,7 @@
             subtract: function (val) {
                 var number;
 
-                if (val.toNumber) {
+                if (val.isAGNumber) {
                     if (isJSNumber(val)) {
                         number = val.toNumber();
                     } else {
@@ -92,7 +92,7 @@
             multiply: function (val) {
                 var number;
 
-                if (val.toNumber) {
+                if (val.isAGNumber) {
                     if (isJSNumber(val)) {
                         number = val.toNumber();
                     } else {
@@ -107,8 +107,10 @@
 
             divide: function (val) {
                 var number;
+                
+                if(val.isZero()) return JSNumber.Zero;
 
-                if (val.toNumber) {
+                if (val.isAGNumber) {
                     if (isJSNumber(val)) {
                         number = val.toNumber();
                     } else {

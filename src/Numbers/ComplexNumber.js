@@ -6,6 +6,10 @@ define(["Numbers/JSNumber"], function (JSNumber) {
 
             var real = (r.isAGNumber) ? r : new JSNumber(r),
                 imaginary = (i.isAGNumber) ? i : new JSNumber(i);
+                
+            if(isNaN(real.toNumber()) || isNaN(imaginary.toNumber())) {
+                throw "DEBUG";
+            }
 
             this.getReal = function () {
                 return real;
@@ -90,6 +94,8 @@ define(["Numbers/JSNumber"], function (JSNumber) {
             },
 
             divide: function (val) {
+                if(this.isZero()) return JSNumber.Zero;
+                
                 if (val instanceof ComplexNumber) {
                     var denominator = val.getReal().multiply(val.getReal()).add(val.getImaginary().multiply(val.getImaginary()));
 

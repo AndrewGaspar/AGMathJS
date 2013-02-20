@@ -271,8 +271,6 @@ requirejs(["AGMath"], function (AGMath) {
             );
 
             var b = a.rowReduce();
-            
-            console.log(b.toString());
 
             var result = b.getColumn(3);
 
