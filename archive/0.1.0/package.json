@@ -1,6 +1,6 @@
 {
   "name": "agmath",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "A basic math library that supports fractions and complex numbers.",
   "main": "./src/AGMath.module.js",
   "repository": {
