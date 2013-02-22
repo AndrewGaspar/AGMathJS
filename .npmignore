@@ -1,0 +1,5 @@
+*.sln
+*.suo
+node_modules
+test
+build
