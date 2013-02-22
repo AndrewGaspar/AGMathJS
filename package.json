@@ -1,0 +1,33 @@
+{
+  "name": "AGMath",
+  "version": "0.1.0",
+  "description": "To setup the proper node modules, run 'node setup.js'.",
+  "main": "./src/AGMath.module.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./test/AGMath-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndrewGaspar/AGMathJS.git"
+  },
+  "keywords": [
+    "math",
+    "fractions",
+    "complex",
+    "numbers",
+    "matrix",
+    "matrices",
+    "number",
+    "fraction",
+    "complex",
+    "vector",
+    "vectors"
+  ],
+  "author": "Andrew Gaspar",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "70ab0714374df23f5335622df30c723474897e3c"
+}
