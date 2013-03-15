@@ -1,4 +1,4 @@
-  npm install agmath
+    npm install agmath
 
 To setup the proper node modules, run 'node setup.js'.
 
